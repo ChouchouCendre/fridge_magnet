@@ -1,0 +1,18 @@
+$pink: #FF2C72;
+
+@mixin breakpoint($point) {
+  @if $point == mobile {
+     @media (max-width: 47.95em)  { @content ; }
+  }
+  @else if $point == tablet {
+    @media (min-width: 48em) { @content ; }
+  }
+  @else if $point == desktop {
+    @media (min-width: 64em) { @content ; }
+  }
+}
+
+@mixin noSelect() {
+  -webkit-touch-callout: none;
+  user-select: none;
+}
