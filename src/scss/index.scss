@@ -1,10 +1,61 @@
 @import 'variables.scss';
-@import 'flexboxgrid.scss';
 
 .container {
   max-width: 600px;
+  border: 1px solid #eee;
+  padding: 20px;
+  font-family: 'Quicksand', sans-serif;
+  text-align: center;
+  margin: 0 auto;
 }
 
 .hide {
   display: none;
+}
+
+h1, h2 {
+  margin: 0;
+}
+
+h2 {
+  font-size: 0.8rem;
+}
+
+.file {
+  margin: 20px;
+  padding: 20px;
+  background-color: #eee;
+}
+
+.todo {
+  text-align: left;
+  margin: 0 auto;
+  border: 1px solid #eee;
+  // padding: 20px;
+  margin: 20px auto;
+  width: 60%;
+  label {
+    cursor: pointer;
+    @include noSelect();
+  }
+  .todo-title {
+    background-color: #999;
+    padding: 20px;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  .todo-list {
+    padding: 20px;
+    input[type="checkbox"] {
+      margin-right: 10px;
+    }
+    input:checked {
+      margin-left: 25px;
+      border: 1px solid blue;
+    }
+  }
+  .todo-item {
+    margin-bottom: 10px;
+  }
 }

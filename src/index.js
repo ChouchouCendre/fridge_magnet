@@ -1,12 +1,12 @@
-/* global Tesseract */
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import App from './app';
+import Header from './header';
+import Todo from './todo';
+import { productsFR } from './products';
 import './scss/index.scss';
 
-const BACK_URL = 'http://localhost:4000';
+const SERVER = 'https://wabr.inliteresearch.com/barcodes';
 
 class FridgeMagnet extends React.Component {
 
@@ -14,110 +14,101 @@ class FridgeMagnet extends React.Component {
     super(props);
 
     this.state = {
-      words: ['plop'],
+      words: [13, 6, 9, 12, 30],
+      imagePreviewUrl: '',
     };
 
-    // this.loadFile();
-
     this.changeInputFile = this.changeInputFile.bind(this);
-    this.recognizeFile = this.recognizeFile.bind(this);
-
-    // https://github.com/naptha/tesseract.js
   }
 
   changeInputFile(files) {
-    console.log('@@ changeInputFile', files);
+    this.loadFile(files);
 
+    // Displays image
+    const reader = new FileReader();
     const file = files[0];
-    Tesseract.recognize(file, {
-      lang: 'fra',
-      user_words_suffix: 'fra.user-words',
-      language_model_penalty_font: 1,
-    })
-      .progress(message => console.log(message))
-      .catch(err => console.error(err))
-      .then(result => console.log(result))
-      .finally(resultOrError => this.recognizeFile(resultOrError));
+    reader.onloadend = () => {
+      this.setState({
+        imagePreviewUrl: reader.result,
+      });
+    };
+    reader.readAsDataURL(file);
   }
 
-  async loadFile(file) {
-    const response = await fetch(`${BACK_URL}/?img=${file}`);
+  async loadFile(files) {
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      formData.append('file[]', file, file.name);
+    }
+
+    const myHeaders = new Headers();
+
+    const myInit = {
+      types: 'DataMatrix',
+      method: 'post',
+      body: formData,
+      headers: myHeaders,
+      processData: false,
+      contentType: false,
+    };
+
+    this.showLoader(true);
+
+    const response = await fetch(SERVER, myInit);
     const result = await response.json();
     console.log('result', result);
+
+    this.parseJson(result);
+    this.showLoader(false);
+
   }
 
-  recognizeFile(resultOrError) {
-    console.log('resultOrError', resultOrError);
-
-    const tmp = [];
-    resultOrError.words.map((word) => {
-      console.log('word', word);
-      if (word.text.length >= 3) tmp.push(word.text);
-    });
-
-    console.log('tmp', tmp);
-
-    const singleString = tmp.join();
-    console.log('singleString', singleString);
-
-    const allCapWords = singleString.match(/\b[A-Z]{3,}\b/g);
-    console.log('allCapWords', allCapWords);
-    const listFR = [
-      ['CAFE', 'CAFÉ'],
-      ['PAIN DE MIE'],
-      ['CACAO'],
-      ['CREME', 'CRÈME'],
-      ['GRUYERE RAPE', 'GRUYÈRE RÂPÉ'],
-      ['EPONGE', 'ÉPONGE'],
-      ['HARICOTS VERTS'],
-      ['CHAMPIGNONS'],
-      ['FROMAGE'],
-    ];
-    const currentList = [];
-    allCapWords.map((wordOCR) => {
-      listFR.map((wordList, o) => {
-        const index = wordList[0].indexOf(wordOCR);
-        console.log('------');
-        console.log('wordOCR', wordOCR);
-        console.log('wordList', wordList);
-        console.log('index', index);
-        if (index !== -1) {
-          if (wordList.length === 2) {
-            currentList.push(wordList[1]);
-          } else {
-            currentList.push(wordList[0]);
-          }
-          listFR.splice(o, 1);
-        }
-      });
-    });
-
-    this.setState({ words: currentList });
-
-    // http://todomvc.com/examples/react/#/
-    new App();
+  showLoader(value) {
+    const loader = document.querySelector('.loading');
+    if (value) {
+      loader.classList.remove('hide');
+    } else {
+      loader.classList.add('hide');
+    }
   }
 
-  renderWords() {
-    /*
-    return (
-      <div className="container-content_cards">
-        { this.state.questions.map((question, index) => this.injectCard(question, index)) }
-      </div>
-    );
-    */
-    console.log('this.state.words', this.state.words);
-    return this.state.words.map(item => `${item}---`);
+  parseJson(obj) {
+    if (obj.Barcodes.length === 0) {
+      console.log('No barcodes found');
+    }
+    const words = [];
+    obj.Barcodes.map((barcode) => {
+      const id = Number(barcode.Text.substr(0, 2)) - 1;
+      words.push(productsFR[id]);
+    });
+    this.setState({ words });
+  }
+
+  procError(jqXHR, textStatus, errorThrown) {
+    if (jqXHR.status === 0) { return `CORS error or server URL is not resolved: ${SERVER}`; }
+    const tab = '   ';
+    return `STATUS: ${jqXHR.status}${tab}${textStatus}${tab}${errorThrown}${tab}${jqXHR.responseText}`;
   }
 
   render() {
     return (
       <div className="container">
+      <Header />
+        <div className="file">
+        <div className="file-title">Upload a picture!</div>
         <input type="file" onChange={ e => this.changeInputFile(e.target.files) } />
-        {/*
-        <img src={this.state.imagePreviewUrl} />
-        */}
-        { this.renderWords() }
+        </div>
+        <div className="loading hide">
+          <img src="200w_d.gif" />
+        </div>
+        <div className="todo">
+          <div className="todo-title">Votre liste de courses</div>
+          <div className="todo-list">
+          { <Todo words={this.state.words} /> }
+          </div>
+        </div>
+        <img src={ this.state.imagePreviewUrl } width="600" />
       </div>
     );
   }
