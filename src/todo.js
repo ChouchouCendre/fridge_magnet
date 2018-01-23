@@ -1,39 +1,37 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import 'pretty-checkbox/src/pretty-checkbox.scss';
 
-import { productsFR } from './products';
+import { productsFR, productsEN } from './products';
+import Labels from './labels.json';
 
-class Todo extends PureComponent {
+class Todo extends Component {
 
   renderTodo() {
+    if (this.props.wordsID.length === 0) {
+      return (
+      <div className="todo-empty">{ Labels[this.props.lang].empty }<br /><br /><img src="homer.gif" width="300" /></div>
+      );
+    }
     return (
-      this.props.words.map((item, index) => (
-        <div key={index}>
-          {/*
-          <label htmlFor={index}>
-            <input type="checkbox" id={index} />{this.decodeId(item)}
-          </label>
-          */}
-          {/* TMP */}
+      this.props.wordsID.map(item => (
+        <div key={item} data-id={item}>
           <div className="todo-item pretty p-icon p-smooth">
           <input type="checkbox" />
-          <div className="state p-success">
-              <i className="icon fa fa-check"></i>
-              <label>{this.decodeId(item)}</label>
+            <div className="state p-success">
+                <i className="icon fa fa-check"></i>
+                <label>{this.decodeId(item)}</label>
+            </div>
           </div>
-    </div>
-          {/* END TMP */}
         </div>
       ))
     );
   }
 
   decodeId(id) {
-    return productsFR[id];
+    return this.props.lang === 'fr' ? productsFR[id] : productsEN[id];
   }
 
   render() {
-    console.log(this.props);
     return (
       this.renderTodo()
     );

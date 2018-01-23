@@ -1,4 +1,6 @@
 @import 'variables.scss';
+@import 'toolbar.scss';
+@import 'loader.scss';
 
 .container {
   max-width: 600px;
@@ -40,22 +42,40 @@ h2 {
   }
   .todo-title {
     background-color: #999;
-    padding: 20px;
+    padding: 15px 20px;
     color: #fff;
     font-weight: bold;
     text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
   }
   .todo-list {
     padding: 20px;
+    label {
+      transition: 300ms all;
+    }
     input[type="checkbox"] {
       margin-right: 10px;
     }
-    input:checked {
-      margin-left: 25px;
-      border: 1px solid blue;
+    input:checked + div label {
+      text-decoration: line-through;
+      color: #999;
     }
   }
   .todo-item {
     margin-bottom: 10px;
   }
+}
+
+.loading, .notFound {
+  margin-bottom: 30px;
+}
+
+.loader {
+  margin: 50px auto 30px;
+  width: 65px;
+}
+
+.todo-empty {
+  text-align: center;
 }

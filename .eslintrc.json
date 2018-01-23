@@ -24,7 +24,8 @@
       "no-else-return" : 0,
       "no-plusplus": 0,
       "no-cond-assign": 0,
-      "import/prefer-default-export": 0
+      "import/prefer-default-export": 0,
+      "prefer-destructuring": 0
       
     },
     "extends": ["eslint:recommended", "plugin:react/recommended", "airbnb-base"]

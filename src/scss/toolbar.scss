@@ -1,0 +1,26 @@
+.todo-toolbar {
+  background-color: #f3f3f3;
+  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+  color: #999;
+  a {
+    color: #999;
+    &:hover {
+      color: #111;
+    }
+  }
+  span {
+    display: block;
+    cursor: pointer;
+    transition: 300ms all;
+    &:hover {
+      color: #111;
+    }
+  }
+}
+
+.tippy-popper .tippy-tooltip-content {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.85rem;
+}
