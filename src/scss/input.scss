@@ -1,0 +1,44 @@
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+  z-index: -1;
+}
+
+.inputfile + label {
+  color: white;
+  background-color: black;
+  transition: 100ms all;
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 20px;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+  background-color: #999;
+}
+
+.inputfile + label {
+	cursor: pointer;
+}
+
+.inputfile:focus + label {
+	outline: 1px dotted #000;
+	outline: -webkit-focus-ring-color auto 5px;
+}
+
+.file {
+  .fa {
+    margin-right: 10px;
+  }
+  @include noSelect();
+}
+
+.inputfile-name {
+  display: block;
+  margin-top: -15px;
+  font-size: 0.8rem;
+}

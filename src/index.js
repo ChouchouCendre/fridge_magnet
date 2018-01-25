@@ -36,6 +36,7 @@ class FridgeMagnet extends React.Component {
     this.state = {
       wordsID: tmpArray,
       imagePreviewUrl: '',
+      imagePreviewName: '',
       noDatamatrixFound: false,
     };
 
@@ -52,7 +53,10 @@ class FridgeMagnet extends React.Component {
   changeInputFile(files) {
     this.loadFile(files);
 
-    this.setState({ noDatamatrixFound: false });
+    this.setState({
+      noDatamatrixFound: false,
+      imagePreviewName: files[0].name,
+    });
     const todo = document.querySelector('.todo');
     todo.classList.add('hide');
 
@@ -164,7 +168,11 @@ class FridgeMagnet extends React.Component {
       <Header />
         <div className="file">
         <div className="file-title">{ Labels[this.lang].file }</div>
-        <input type="file" onChange={ e => this.changeInputFile(e.target.files) } />
+        
+        <input type="file" name="file" id="file" className="inputfile" onChange={ e => this.changeInputFile(e.target.files) } />
+        <label htmlFor="file"><i className="fa fa-file-image-o" aria-hidden="true"></i> <span>{ Labels[this.lang].browse }</span></label>
+        <span className="inputfile-name">{ this.state.imagePreviewName }</span>
+
         </div>
         <div className="loading hide">
           <img src="searching.gif" width="300" />

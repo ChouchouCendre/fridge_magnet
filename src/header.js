@@ -4,6 +4,7 @@ class Header extends PureComponent {
   render() {
     return (
       <div className="header">
+        <img src="logo.svg" width="300" /><br />
         <img src="fridge.svg" width="50" />
         <h1>Fridge Magnet</h1>
         <h2>Les Aventures du Chouchou Cendré</h2>

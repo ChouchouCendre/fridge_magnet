@@ -20,7 +20,7 @@ class Toolbar extends PureComponent {
   clickSendMail() {
     const mailSubject = encodeURIComponent(Labels[this.props.lang].mailSubject);
     const courses = encodeURIComponent(`— ${this.props.labels.join('\n— ')}`);
-    window.open(`mailto:?subject=${mailSubject}&body=${courses}`, '_self');
+    window.open(`mailto:?subject=${mailSubject}&body=${courses}`, '_blank');
   }
 
   render() {
