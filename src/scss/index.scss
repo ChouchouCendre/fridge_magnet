@@ -4,12 +4,14 @@
 @import 'input.scss';
 
 .container {
+  /*
   max-width: 600px;
   border: 1px solid #eee;
   padding: 20px;
-  font-family: 'Quicksand', sans-serif;
-  text-align: center;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
   margin: 0 auto;
+  */
+  text-align: center;
 }
 
 .hide {
@@ -22,6 +24,7 @@ h1, h2 {
 
 h2 {
   font-size: 0.8rem;
+  text-align: center;
 }
 
 .file {
@@ -49,6 +52,9 @@ h2 {
     text-transform: uppercase;
     letter-spacing: 1px;
     text-align: center;
+    span {
+      font-size: 0.8rem;
+    }
   }
   .todo-list {
     padding: 20px;
@@ -79,4 +85,46 @@ h2 {
 
 .todo-empty {
   text-align: center;
+}
+
+.example {
+  span {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    color: #333;
+  }
+}
+
+.footer {
+  margin-top: 20px;
+  font-size: 0.8rem;
+  color: #999;
+  .fa {
+    margin-right: 5px;
+  }
+  a {
+    color: #333;
+    text-decoration: none;
+    transition: 300ms color;
+    &:hover {
+      color: #000;
+      text-decoration: underline;
+    }
+  }
+}
+
+.restart {
+  margin: 20px;
+  .restart-button {
+    color: white;
+    background-color: black;
+    transition: 100ms all;
+    display: inline-block;
+    padding: 10px 20px;
+    cursor: pointer;
+    &:hover {
+      background-color: #999;
+    }
+  }
 }

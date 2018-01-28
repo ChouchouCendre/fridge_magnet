@@ -1,7 +1,7 @@
 {
   "en": {
     "file": "Load the picture with the Datamatrix codes:",
-    "wait": "Please wait...<br />Decoding Datamatrix codes in progress...",
+    "wait": "Please wait...<br />Decoding Datamatrix codes in progress...<br />(It can be long)",
     "list": "Your grocery list",
     "empty": "Your list is empty!",
     "clear": "Clear completed",
@@ -10,11 +10,13 @@
     "mail": "E-mail to someone",
     "mailSubject": "Grocery list",
     "noDatamatrix": "No Datamatrix code detected...<br />Please try with another picture.",
-    "browse": "Choose a file…"
+    "browse": "Choose a file…",
+    "example": "Example:",
+    "footer": "This project is a beta version. Share it on social networks if you like it. To report a bug, <a href='http://www.lesaventuresduchouchou.com/contactez-moi/'>contact me</a>!"
   },
   "fr": {
     "file": "Charger la photo avec les codes Datamatrix :",
-    "wait": "Veuillez patienter...<br />D&eacute;codage des codes Datamatrix en cours...",
+    "wait": "Veuillez patienter...<br />D&eacute;codage des codes Datamatrix en cours...<br />(Cela peut prendre du temps)",
     "list": "Votre liste de courses",
     "empty": "Votre liste est vide !",
     "clear": "Effacer les terminés",
@@ -23,6 +25,8 @@
     "mail": "Envoyer par e-mail",
     "mailSubject": "Liste des courses",
     "noDatamatrix": "Pas de code Datamatrix détecté...<br />Merci de réessayer avec une autre photo.",
-    "browse": "Choisir un fichier…"
+    "browse": "Choisir un fichier…",
+    "example": "Exemple :",
+    "footer": "Ce projet est en version beta. N'hésitez pas à le partager sur les réseaux sociaux s'il vous est utile. Si vous constatez un bug, n'hésitez pas à <a href='http://www.lesaventuresduchouchou.com/contactez-moi/'>me contacter</a> !"
   }
 }

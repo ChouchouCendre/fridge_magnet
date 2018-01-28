@@ -12,36 +12,27 @@ import Labels from './labels.json';
 const SERVER = 'https://wabr.inliteresearch.com/barcodes';
 const fake = false;
 
+/*
+// TODO : variable environment for path images
+*/
+
 class FridgeMagnet extends React.Component {
 
   constructor(props) {
     super(props);
     this.lang = this.getLanguage();
 
-    const tmpArray = [];
-    // Fake temporary
-    /*
-    if (fake) {
-      let rand = Math.floor(Math.random() * (productsFR.length / 2));
-      if (rand < 3) rand = 3;
-      for (let i = 0; i < rand; i++) {
-        const alea = Math.floor(Math.random() * productsFR.length);
-        if (tmpArray.indexOf(alea) === -1) {
-          tmpArray.push(alea);
-        }
-      }
-    }
-    */
-
     this.state = {
-      wordsID: tmpArray,
+      wordsID: [],
       imagePreviewUrl: '',
       imagePreviewName: '',
       noDatamatrixFound: false,
+      nbElements: 0,
     };
 
     this.changeInputFile = this.changeInputFile.bind(this);
     this.onClear = this.onClear.bind(this);
+    this.clickRestart = this.clickRestart.bind(this);
   }
 
   getLanguage() {
@@ -57,8 +48,8 @@ class FridgeMagnet extends React.Component {
       noDatamatrixFound: false,
       imagePreviewName: files[0].name,
     });
-    const todo = document.querySelector('.todo');
-    todo.classList.add('hide');
+    const example = document.querySelector('.example');
+    example.classList.add('hide');
 
     // Displays image
     const reader = new FileReader();
@@ -92,13 +83,26 @@ class FridgeMagnet extends React.Component {
     this.showLoader(true);
     let result = null;
 
+    // Fake temporary
+    if (fake) {
+      const tmpArray = [];
+      let rand = Math.floor(Math.random() * (productsFR.length / 2));
+      if (rand < 3) rand = 3;
+      for (let i = 0; i < rand; i++) {
+        const alea = Math.floor(Math.random() * productsFR.length);
+        if (tmpArray.indexOf(alea) === -1) {
+          tmpArray.push(alea);
+        }
+      }
+      this.setState({ wordsID: tmpArray, noDatamatrixFound: false, nbElements: tmpArray.length });
+      return;
+    }
+
     const response = await fetch(SERVER, myInit);
     result = await response.json();
     console.log('=== result', result);
-
     this.parseJson(result);
     this.showLoader(false);
-
   }
 
   showLoader(value) {
@@ -112,7 +116,7 @@ class FridgeMagnet extends React.Component {
 
   parseJson(obj) {
     if (obj.Barcodes.length === 0) {
-      this.setState({ noDatamatrixFound: true });
+      this.setState({ noDatamatrixFound: true, nbElements: 0 });
       return;
     }
     const wordsID = [];
@@ -120,9 +124,7 @@ class FridgeMagnet extends React.Component {
       const id = Number(barcode.Text.substr(0, 2)) - 1;
       wordsID.push(id);
     });
-    this.setState({ wordsID, noDatamatrixFound: false });
-    const todo = document.querySelector('.todo');
-    todo.classList.remove('hide');
+    this.setState({ wordsID, noDatamatrixFound: false, nbElements: wordsID.length });
   }
 
   procError(jqXHR, textStatus, errorThrown) {
@@ -154,6 +156,10 @@ class FridgeMagnet extends React.Component {
     return wordsLabel;
   }
 
+  clickRestart() {
+    this.setState({ wordsID: [], imagePreviewName: null });
+  }
+
   renderNotFound() {
     if (!this.state.noDatamatrixFound) return null;
     return (
@@ -161,27 +167,43 @@ class FridgeMagnet extends React.Component {
     );
   }
 
+  renderFile() {
+    if (!this.state.imagePreviewName) {
+      return (
+        <div className="file">
+          <div className="file-title">{ Labels[this.lang].file }</div>
+            <input type="file" name="file" id="file" className="inputfile" onChange={ e => this.changeInputFile(e.target.files) } />
+            <label htmlFor="file"><i className="fa fa-file-image-o" aria-hidden="true"></i> <span>{ Labels[this.lang].browse }</span></label>
+            <span className="inputfile-name">{ this.state.imagePreviewName }</span>
+        </div>
+      );
+    } else {
+      return (
+        <div className="restart">
+          <span className="restart-button" onClick={ this.clickRestart }><i className="fa fa-refresh" aria-hidden="true"></i> Recommencer</span>
+        </div>
+      );
+    }
+  }
+
   render() {
-    const classTodo = fake ? 'todo' : 'todo hide';
+    const classTodo = this.state.wordsID.length === 0 ? 'todo hide' : 'todo';
     return (
       <div className="container">
       <Header />
-        <div className="file">
-        <div className="file-title">{ Labels[this.lang].file }</div>
-        
-        <input type="file" name="file" id="file" className="inputfile" onChange={ e => this.changeInputFile(e.target.files) } />
-        <label htmlFor="file"><i className="fa fa-file-image-o" aria-hidden="true"></i> <span>{ Labels[this.lang].browse }</span></label>
-        <span className="inputfile-name">{ this.state.imagePreviewName }</span>
-
+      { this.renderFile() }
+        <div className="example">
+          <span>{ Labels[this.lang].example }</span>
+          <img src="/content/fridge_magnet/example.jpg" />
         </div>
         <div className="loading hide">
-          <img src="searching.gif" width="300" />
+          <img src="/content/fridge_magnet/searching.gif" width="300" />
           <Loader />
           <span dangerouslySetInnerHTML={{ __html: Labels[this.lang].wait }} />
         </div>
         { this.renderNotFound() }
         <div className={classTodo}>
-          <div className="todo-title">{ Labels[this.lang].list }</div>
+          <div className="todo-title">{ Labels[this.lang].list }<br /><span>({ this.state.nbElements })</span></div>
           <div className="todo-list">
           { <Todo wordsID={this.state.wordsID} lang={this.lang} /> }
           </div>
@@ -193,6 +215,9 @@ class FridgeMagnet extends React.Component {
         </div>
         <div className="image">
           <img src={ this.state.imagePreviewUrl } width="500" />
+        </div>
+        <div className="footer">
+        <i className="fa fa-info-circle" aria-hidden="true"></i> <span dangerouslySetInnerHTML={{ __html: Labels[this.lang].footer }} />
         </div>
       </div>
     );
