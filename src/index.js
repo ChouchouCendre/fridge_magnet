@@ -1,10 +1,13 @@
+/* global NODE_ENV */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Header from './header';
 import Todo from './todo';
 import Toolbar from './toolbar';
-import Loader from './loader';
+import Loading from './loading';
+import Global from './global';
 import { productsFR, productsEN } from './products';
 import './scss/index.scss';
 import Labels from './labels.json';
@@ -20,7 +23,11 @@ class FridgeMagnet extends React.Component {
 
   constructor(props) {
     super(props);
-    this.lang = this.getLanguage();
+    Global.lang = this.getLanguage();
+    console.log('===> ', NODE_ENV);
+    if (NODE_ENV === 'prod') {
+      Global.pathImg = '/content/fridge_magnet/';
+    }
 
     this.state = {
       wordsID: [],
@@ -147,7 +154,7 @@ class FridgeMagnet extends React.Component {
   getLabels() {
     const wordsLabel = [];
     this.state.wordsID.forEach((id) => {
-      if (this.lang === 'fr') {
+      if (Global.lang === 'fr') {
         wordsLabel.push([productsFR[id]]);
       } else {
         wordsLabel.push([productsEN[id]]);
@@ -163,7 +170,7 @@ class FridgeMagnet extends React.Component {
   renderNotFound() {
     if (!this.state.noDatamatrixFound) return null;
     return (
-      <div className="notFound"><span dangerouslySetInnerHTML={{ __html: Labels[this.lang].noDatamatrix }} /><br /><br /><img src="alice.gif" width="300" /></div>
+      <div className="notFound"><span dangerouslySetInnerHTML={{ __html: Labels[Global.lang].noDatamatrix }} /><br /><br /><img src="alice.gif" width="300" /></div>
     );
   }
 
@@ -171,9 +178,9 @@ class FridgeMagnet extends React.Component {
     if (!this.state.imagePreviewName) {
       return (
         <div className="file">
-          <div className="file-title">{ Labels[this.lang].file }</div>
+          <div className="file-title">{ Labels[Global.lang].file }</div>
             <input type="file" name="file" id="file" className="inputfile" onChange={ e => this.changeInputFile(e.target.files) } />
-            <label htmlFor="file"><i className="fa fa-file-image-o" aria-hidden="true"></i> <span>{ Labels[this.lang].browse }</span></label>
+            <label htmlFor="file"><i className="fa fa-file-image-o" aria-hidden="true"></i> <span>{ Labels[Global.lang].browse }</span></label>
             <span className="inputfile-name">{ this.state.imagePreviewName }</span>
         </div>
       );
@@ -192,32 +199,28 @@ class FridgeMagnet extends React.Component {
       <div className="container">
       <Header />
       { this.renderFile() }
-        <div className="example">
-          <span>{ Labels[this.lang].example }</span>
-          <img src="/content/fridge_magnet/example.jpg" />
-        </div>
-        <div className="loading hide">
-          <img src="/content/fridge_magnet/searching.gif" width="300" />
-          <Loader />
-          <span dangerouslySetInnerHTML={{ __html: Labels[this.lang].wait }} />
-        </div>
+      <Loading />
         { this.renderNotFound() }
         <div className={classTodo}>
-          <div className="todo-title">{ Labels[this.lang].list }<br /><span>({ this.state.nbElements })</span></div>
+          <div className="todo-title">{ Labels[Global.lang].list }</div>
           <div className="todo-list">
-          { <Todo wordsID={this.state.wordsID} lang={this.lang} /> }
+          { <Todo wordsID={this.state.wordsID} lang={Global.lang} /> }
           </div>
           <Toolbar
           onClear={this.onClear}
           labels={this.getLabels()}
-          lang={this.lang}
+          lang={Global.lang}
           />
+        </div>
+        <div className="example">
+          <span>{ Labels[Global.lang].example }</span>
+          <img src="example.jpg" width="400" />
         </div>
         <div className="image">
           <img src={ this.state.imagePreviewUrl } width="500" />
         </div>
         <div className="footer">
-        <i className="fa fa-info-circle" aria-hidden="true"></i> <span dangerouslySetInnerHTML={{ __html: Labels[this.lang].footer }} />
+        <i className="fa fa-info-circle" aria-hidden="true"></i> <span dangerouslySetInnerHTML={{ __html: Labels[Global.lang].footer }} />
         </div>
       </div>
     );
