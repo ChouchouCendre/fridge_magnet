@@ -12,7 +12,8 @@
     "noDatamatrix": "No Datamatrix code detected...<br />Please try with another picture.",
     "browse": "Choose a file…",
     "example": "Example:",
-    "footer": "This project is a beta version. Share it on social networks if you like it. To report a bug, <a href='http://www.lesaventuresduchouchou.com/contactez-moi/'>contact me</a>!"
+    "footer": "This project is a beta version. Share it on social networks if you like it. To report a bug, <a href='http://www.lesaventuresduchouchou.com/contactez-moi/'>contact me</a>!",
+    "copyPaste": "Copy (clipboard)"
   },
   "fr": {
     "file": "Charger la photo avec les codes Datamatrix :",
@@ -27,6 +28,7 @@
     "noDatamatrix": "Pas de code Datamatrix détecté...<br />Merci de réessayer avec une autre photo.",
     "browse": "Choisir un fichier…",
     "example": "Exemple :",
-    "footer": "Ce projet est en version beta. N'hésitez pas à le partager sur les réseaux sociaux s'il vous est utile. Si vous constatez un bug, n'hésitez pas à <a href='http://www.lesaventuresduchouchou.com/contactez-moi/'>me contacter</a> !"
+    "footer": "Ce projet est en version beta. N'hésitez pas à le partager sur les réseaux sociaux s'il vous est utile. Si vous constatez un bug, n'hésitez pas à <a href='http://www.lesaventuresduchouchou.com/contactez-moi/'>me contacter</a> !",
+    "copyPaste": "Copier (presse-papier)"
   }
 }

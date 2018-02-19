@@ -13,11 +13,7 @@ import './scss/index.scss';
 import Labels from './labels.json';
 
 const SERVER = 'https://wabr.inliteresearch.com/barcodes';
-const fake = false;
-
-/*
-// TODO : variable environment for path images
-*/
+const fake = true;
 
 class FridgeMagnet extends React.Component {
 
@@ -102,6 +98,11 @@ class FridgeMagnet extends React.Component {
         }
       }
       this.setState({ wordsID: tmpArray, noDatamatrixFound: false, nbElements: tmpArray.length });
+      // Image processing
+      // console.log('=== getPixel', this.getPixel(files[0], 10, 10)); // [255, 255, 255, 0];
+      // this.getPixels('http://www.lesaventuresduchouchou.com/content/fridge_magnet/example.jpg');
+      this.getPixels(files[0]);
+      //
       return;
     }
 
@@ -110,6 +111,17 @@ class FridgeMagnet extends React.Component {
     console.log('=== result', result);
     this.parseJson(result);
     this.showLoader(false);
+  }
+
+  getPixels(url) {
+    console.log('url', url);
+    const img = new Image();
+    img.src = url;
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    context.drawImage(img, 0, 0);
+    console.log(img.width, img.height);
+    return context.getImageData(0, 0, 1, 1).data;
   }
 
   showLoader(value) {
@@ -210,6 +222,7 @@ class FridgeMagnet extends React.Component {
           onClear={this.onClear}
           labels={this.getLabels()}
           lang={Global.lang}
+          wordsID={this.state.wordsID}
           />
         </div>
         <div className="example">
