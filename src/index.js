@@ -13,7 +13,7 @@ import './scss/index.scss';
 import Labels from './labels.json';
 
 const SERVER = 'https://wabr.inliteresearch.com/barcodes';
-const fake = true;
+let fake = false;
 
 class FridgeMagnet extends React.Component {
 
@@ -23,6 +23,7 @@ class FridgeMagnet extends React.Component {
     console.log('===> ', NODE_ENV);
     if (NODE_ENV === 'prod') {
       Global.pathImg = '/content/fridge_magnet/';
+      fake = false;
     }
 
     this.state = {
@@ -182,7 +183,7 @@ class FridgeMagnet extends React.Component {
   renderNotFound() {
     if (!this.state.noDatamatrixFound) return null;
     return (
-      <div className="notFound"><span dangerouslySetInnerHTML={{ __html: Labels[Global.lang].noDatamatrix }} /><br /><br /><img src="alice.gif" width="300" /></div>
+      <div className="notFound"><span dangerouslySetInnerHTML={{ __html: Labels[Global.lang].noDatamatrix }} /><br /><br /><img src={`${Global.pathImg}alice.gif`} width="300" /></div>
     );
   }
 
@@ -196,13 +197,14 @@ class FridgeMagnet extends React.Component {
             <span className="inputfile-name">{ this.state.imagePreviewName }</span>
         </div>
       );
-    } else {
+    } else if (this.state.nbElements > 0) {
       return (
         <div className="restart">
           <span className="restart-button" onClick={ this.clickRestart }><i className="fa fa-refresh" aria-hidden="true"></i> Recommencer</span>
         </div>
       );
     }
+    return null;
   }
 
   render() {
@@ -227,10 +229,10 @@ class FridgeMagnet extends React.Component {
         </div>
         <div className="example">
           <span>{ Labels[Global.lang].example }</span>
-          <img src="example.jpg" width="400" />
+          <img src={`${Global.pathImg}example.jpg`} width="400" />
         </div>
         <div className="image">
-          <img src={ this.state.imagePreviewUrl } width="500" />
+          <img src={ this.state.imagePreviewUrl } width="400" />
         </div>
         <div className="footer">
         <i className="fa fa-info-circle" aria-hidden="true"></i> <span dangerouslySetInnerHTML={{ __html: Labels[Global.lang].footer }} />

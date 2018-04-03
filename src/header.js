@@ -6,7 +6,6 @@ class Header extends PureComponent {
     return (
       <div className="header">
         <img src={`${Global.pathImg}fridge.svg`} width="50" />
-        <h2>Fridge Magnet</h2>
       </div>
     );
   }

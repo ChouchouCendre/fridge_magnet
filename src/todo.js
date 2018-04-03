@@ -3,13 +3,14 @@ import 'pretty-checkbox/src/pretty-checkbox.scss';
 
 import { productsFR, productsEN } from './products';
 import Labels from './labels.json';
+import Global from './global';
 
 class Todo extends Component {
 
   renderTodo() {
     if (this.props.wordsID.length === 0) {
       return (
-      <div className="todo-empty">{ Labels[this.props.lang].empty }<br /><br /><img src="homer.gif" width="300" /></div>
+      <div className="todo-empty">{ Labels[this.props.lang].empty }<br /><br /><img src={`${Global.pathImg}homer.gif`} width="300" /></div>
       );
     }
     return (

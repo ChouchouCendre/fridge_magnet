@@ -7,7 +7,7 @@ class Loading extends PureComponent {
   render() {
     return (
       <div className="loading hide">
-        <img src="searching.gif" width="300" />
+        <img src={`${Global.pathImg}searching.gif`} width="300" />
         <Loader />
         <span dangerouslySetInnerHTML={{ __html: Labels[Global.lang].wait }} />
       </div>

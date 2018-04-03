@@ -10,13 +10,18 @@
       color: #111;
     }
   }
-  span {
+  div {
     display: block;
     cursor: pointer;
     transition: 300ms all;
+    text-align: center;
     &:hover {
       color: #111;
     }
+  }
+  span {
+    font-size: 0.65rem;
+    display: block;
   }
 }
 

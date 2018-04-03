@@ -13,7 +13,8 @@
     "browse": "Choose a file…",
     "example": "Example:",
     "footer": "This project is a beta version. Share it on social networks if you like it. To report a bug, <a href='http://www.lesaventuresduchouchou.com/contactez-moi/'>contact me</a>!",
-    "copyPaste": "Copy (clipboard)"
+    "copyPaste": "Copy in the clipboard",
+    "copied": "Copied in the clipboard"
   },
   "fr": {
     "file": "Charger la photo avec les codes Datamatrix :",
@@ -29,6 +30,7 @@
     "browse": "Choisir un fichier…",
     "example": "Exemple :",
     "footer": "Ce projet est en version beta. N'hésitez pas à le partager sur les réseaux sociaux s'il vous est utile. Si vous constatez un bug, n'hésitez pas à <a href='http://www.lesaventuresduchouchou.com/contactez-moi/'>me contacter</a> !",
-    "copyPaste": "Copier (presse-papier)"
+    "copyPaste": "Copier dans le presse-papier",
+    "copied": "Copié dans le presse-papier"
   }
 }

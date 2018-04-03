@@ -40,7 +40,7 @@ h2 {
   border: 1px solid #eee;
   // padding: 20px;
   margin: 20px auto;
-  width: 60%;
+  width: 85%;
   label {
     cursor: pointer;
     @include noSelect();
@@ -77,7 +77,7 @@ h2 {
 }
 
 .loading, .notFound {
-  margin-bottom: 30px;
+  margin: 30px 0;
 }
 
 .loader {
