@@ -66,10 +66,11 @@ export const productsFR = [
   'Poisson',
   'Farine',
   'Serviettes / Tampons',
+  'Piles',
 ];
 
 export const productsEN = [
-  'Baguette',
+  'Bread',
   'Pasta',
   'Ketchup',
   'Pizza',
@@ -123,17 +124,18 @@ export const productsEN = [
   'Shampoo',
   'Shower gel',
   'Yahout',
-  'Spread',
+  'Chocolate Spread',
   'Cereals',
   'Appetizers',
   'Tomato sauce',
   'Wine',
   'Cotton swab',
   'Wipes',
-  'Layers',
+  'Diapers',
   'Compote',
   'Garbage bags',
   'Fish',
   'Flour',
   'Towels / Tampons',
+  'Batteries',
 ];

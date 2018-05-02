@@ -41,7 +41,15 @@ class FridgeMagnet extends React.Component {
 
   getLanguage() {
     let lang = window.location.href.split('?lang=')[1];
-    if (!lang) lang = 'fr';
+    if (!lang) {
+      let userLang = navigator.language || navigator.userLanguage;
+      userLang = userLang.substr(0, 2);
+      if (userLang === 'fr') {
+        lang = 'fr';
+      } else {
+        lang = 'en';
+      }
+    }
     return lang;
   }
 
